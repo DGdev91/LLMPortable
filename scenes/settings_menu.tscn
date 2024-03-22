@@ -1,0 +1,293 @@
+[gd_scene load_steps=11 format=3 uid="uid://dab204horg5fk"]
+
+[ext_resource type="Script" path="res://scenes/Settings_Menu.cs" id="1_26pme"]
+[ext_resource type="Script" path="res://scenes/LnEditModel.cs" id="2_4lpsx"]
+[ext_resource type="FontFile" uid="uid://dke22u4g2dwqe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="2_ibtjf"]
+[ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="3_d58y5"]
+[ext_resource type="Script" path="res://scenes/SBSeed.cs" id="5_as1l0"]
+[ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialIcon.gd" id="5_sifh5"]
+[ext_resource type="Script" path="res://scenes/ModelFileDialog.cs" id="7_ka70x"]
+
+[sub_resource type="Animation" id="Animation_yfhg5"]
+resource_name = "slide_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-360, 0), Vector2(-720, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6f6c8"]
+resource_name = "slide_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-720, 0), Vector2(-360, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vh4je"]
+_data = {
+"slide_in": SubResource("Animation_yfhg5"),
+"slide_out": SubResource("Animation_6f6c8")
+}
+
+[node name="Settings_Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 720.0
+offset_right = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_26pme")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+offset_right = 720.002
+offset_bottom = 1280.0
+
+[node name="LblModel" type="Label" parent="Panel"]
+visible = false
+layout_mode = 2
+offset_left = 8.0
+offset_top = 12.0
+offset_right = 728.0
+offset_bottom = 35.0
+text = "Model"
+
+[node name="LnEditModel" type="LineEdit" parent="Panel/LblModel"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = -4.0
+offset_right = 576.0
+offset_bottom = 27.0
+script = ExtResource("2_4lpsx")
+
+[node name="BtnModel" type="Button" parent="Panel/LblModel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 584.0
+offset_top = -4.0
+offset_right = 617.0
+offset_bottom = 27.0
+theme_override_fonts/font = ExtResource("2_ibtjf")
+theme_override_font_sizes/font_size = 20
+text = "󰈞"
+script = ExtResource("3_d58y5")
+icon_name = "file-find"
+icon_size = 20
+
+[node name="LblSystemPrompt" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 48.0
+offset_right = 728.0
+offset_bottom = 71.0
+text = "System Prompt"
+
+[node name="TxtSystemPrompt" type="TextEdit" parent="Panel/LblSystemPrompt"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 2.0
+offset_right = 616.0
+offset_bottom = 157.0
+
+[node name="LblStartText" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 214.0
+offset_right = 728.0
+offset_bottom = 237.0
+text = "Start Text"
+
+[node name="TxtStartText" type="TextEdit" parent="Panel/LblStartText"]
+layout_mode = 0
+offset_left = 128.0
+offset_right = 616.0
+offset_bottom = 154.0
+
+[node name="LblStopWords" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 376.0
+offset_right = 112.0
+offset_bottom = 399.0
+text = "Stop Words"
+
+[node name="LnStopWords" type="LineEdit" parent="Panel/LblStopWords"]
+layout_mode = 0
+offset_left = 128.0
+offset_right = 616.0
+offset_bottom = 31.0
+
+[node name="LblContextSize" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 416.0
+offset_right = 728.0
+offset_bottom = 439.0
+text = "Context Size"
+
+[node name="SBContextSize" type="SpinBox" parent="Panel/LblContextSize"]
+layout_mode = 0
+offset_left = 128.0
+offset_right = 625.0
+offset_bottom = 31.0
+max_value = 9.22337e+18
+
+[node name="LblSeed" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 456.0
+offset_right = 728.0
+offset_bottom = 479.0
+text = "Seed
+"
+
+[node name="SBSeed" type="SpinBox" parent="Panel/LblSeed"]
+layout_mode = 0
+offset_left = 128.0
+offset_right = 576.0
+offset_bottom = 31.0
+max_value = 9.22337e+18
+script = ExtResource("5_as1l0")
+
+[node name="MaterialButton" type="Button" parent="Panel/LblSeed"]
+layout_mode = 0
+offset_left = 584.0
+offset_right = 616.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("2_ibtjf")
+theme_override_font_sizes/font_size = 20
+text = "󰝮"
+script = ExtResource("3_d58y5")
+icon_name = "dice-multiple"
+icon_size = 20
+
+[node name="LblThreads" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 496.0
+offset_right = 728.0
+offset_bottom = 519.0
+text = "Threads"
+
+[node name="SBThreads" type="SpinBox" parent="Panel/LblThreads"]
+layout_mode = 0
+offset_left = 128.0
+offset_right = 625.0
+offset_bottom = 31.0
+max_value = 9.22337e+18
+
+[node name="LblBatchThreads" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 536.0
+offset_right = 728.0
+offset_bottom = 559.0
+text = "Batch Threads"
+
+[node name="SBBatchThreads" type="SpinBox" parent="Panel/LblBatchThreads"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = -2.0
+offset_right = 625.0
+offset_bottom = 29.0
+max_value = 9.22337e+18
+
+[node name="LblGpuLayers" type="Label" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 8.0
+offset_top = 576.0
+offset_right = 728.0
+offset_bottom = 599.0
+text = "Gpu Layers"
+
+[node name="SBGpuLayers" type="SpinBox" parent="Panel/LblGpuLayers"]
+layout_mode = 0
+offset_left = 128.0
+offset_right = 625.0
+offset_bottom = 31.0
+max_value = 9.22337e+18
+
+[node name="SaveButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 1152.0
+offset_right = 464.0
+offset_bottom = 1218.0
+theme_override_font_sizes/font_size = 42
+text = " Save"
+alignment = 0
+
+[node name="MaterialIcon" type="Label" parent="Panel/SaveButton"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -17.0
+offset_right = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_ibtjf")
+theme_override_font_sizes/font_size = 36
+text = "󰆓"
+script = ExtResource("5_sifh5")
+icon_name = "content-save"
+icon_size = 36
+
+[node name="ModelFileDialog" type="FileDialog" parent="."]
+title = "Open a File or Directory"
+initial_position = 2
+size = Vector2i(695, 450)
+ok_button_text = "Apri"
+file_mode = 3
+access = 2
+filters = PackedStringArray("*.gguf")
+show_hidden_files = true
+use_native_dialog = true
+script = ExtResource("7_ka70x")
+
+[node name="MaterialButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = -72.0
+offset_bottom = 72.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_ibtjf")
+theme_override_font_sizes/font_size = 64
+text = "󰒓"
+script = ExtResource("3_d58y5")
+icon_name = "cog"
+icon_size = 64
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vh4je")
+}
+speed_scale = 2.5
+
+[connection signal="pressed" from="Panel/LblModel/BtnModel" to="ModelFileDialog" method="_on_btn_model_pressed"]
+[connection signal="pressed" from="Panel/LblSeed/MaterialButton" to="Panel/LblSeed/SBSeed" method="_on_material_button_pressed"]
+[connection signal="pressed" from="Panel/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="file_selected" from="ModelFileDialog" to="Panel/LblModel/LnEditModel" method="_on_model_file_dialog_file_selected"]
+[connection signal="button_up" from="MaterialButton" to="." method="_on_material_button_button_up"]

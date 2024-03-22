@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4b3elasw6yih"]
+
+[ext_resource type="PackedScene" uid="uid://d3wfn3gooohes" path="res://scenes/llm_manager.tscn" id="1_jj2lx"]
+[ext_resource type="Script" path="res://scenes/Main.cs" id="1_mxjdl"]
+[ext_resource type="Script" path="res://scenes/SettingsManager.cs" id="2_fyjdw"]
+[ext_resource type="PackedScene" uid="uid://dab204horg5fk" path="res://scenes/settings_menu.tscn" id="3_0hm1x"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_mxjdl")
+
+[node name="SettingsManager" type="Node" parent="."]
+script = ExtResource("2_fyjdw")
+
+[node name="LLM_Manager" parent="." instance=ExtResource("1_jj2lx")]
+
+[node name="Settings_Menu" parent="." instance=ExtResource("3_0hm1x")]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="StartTimer" to="LLM_Manager" method="_on_start_timer_timeout"]
