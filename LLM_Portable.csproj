@@ -1,17 +1,89 @@
-<Project Sdk="Godot.NET.Sdk/4.2.1">
+<Project Sdk="Godot.NET.Sdk/4.4.1">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>LLM_Portable</RootNamespace>
+    <!-- Workaround LlamaSharp issue #382.
+    Ignore publishing errors on extracting duplicates in LLamaSharp.Backend.* packages.
+    Result is on publishing a build the variants for llama.dll and llava_shared.dll are
+    overwriting in root folder. We'll remove these and copy the runtime folders instead.
+    LlamaSharp.dll picks up the correct files from runtime folders.
+    -->
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    <RestorePackagesPath>bin\$(Configuration)\.nuget\packages</RestorePackagesPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LLamaSharp" Version="0.10.0" />
-    <PackageReference Condition="!$(RuntimeIdentifier.StartsWith('osx')) And !$(RuntimeIdentifier.StartsWith('android-arm64'))" Include="LLamaSharp.Backend.OpenCL" Version="0.10.0" />
-    <PackageReference Condition="$(RuntimeIdentifier.StartsWith('osx'))" Include="LLamaSharp.Backend.MacMetal" Version="0.7.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="LLamaSharp" Version="0.24.0" />
+      <PackageReference Include="LLamaSharp.Backend.Vulkan" Version="0.24.0" Condition="!$(RuntimeIdentifier.StartsWith('android'))" />
+      <PackageReference Include="LLamaSharp.Backend.Cpu" Version="0.24.0" Condition="!$(RuntimeIdentifier.StartsWith('android'))" />
+      <PackageReference Include="LLamaSharp.Backend.Cpu.Android" Version="0.24.0" Condition="$(RuntimeIdentifier.StartsWith('android'))" />
   </ItemGroup>
   <ItemGroup>
-    <ContentWithTargetPath Condition="$(RuntimeIdentifier.StartsWith('android-arm64'))" Include="llamacpp\android_arm64\**">
+      <LlamaSharpBackendCpu Include="$(RestorePackagesPath)\llamasharp.backend.cpu\0.24.0\runtimes\**\*.*" />
+      <LlamaSharpBackendVulkanLinux Include="$(RestorePackagesPath)\llamasharp.backend.vulkan.linux\0.24.0\runtimes\**\*.*" />
+      <LlamaSharpBackendVulkanWindows Include="$(RestorePackagesPath)\llamasharp.backend.vulkan.windows\0.24.0\runtimes\**\*.*" />
+      <LlamaSharpBackendCpuAndroid Include="$(RestorePackagesPath)\llamasharp.backend.cpu\0.24.0\runtimes\**\*.*" />
+      <LlamaSharpBackendCpuAndroidARM Include="$(RestorePackagesPath)\llamasharp.backend.cpu.android\0.24.0\runtimes\android-arm64-v8a\**\*.*" />
+      <LlamaSharpBackendCpuAndroidx64 Include="$(RestorePackagesPath)\llamasharp.backend.cpu.android\0.24.0\runtimes\android-x86_64\**\*.*" />
+  </ItemGroup>
+
+  <Target Name="CopyRuntimesFolderOnPublish" AfterTargets="Build" Condition="!$(RuntimeIdentifier.StartsWith('android'))">
+      <Delete Files="$(PublishDir)llama.dll" />
+      <Delete Files="$(PublishDir)llava_shared.dll" />
+      <Delete Files="$(PublishDir)ggml.dll" />
+      <Delete Files="$(PublishDir)ggml-base.dll" />
+      <Delete Files="$(PublishDir)ggml-cpu.dll" />
+      <Delete Files="$(PublishDir)ggml-vulkan.dll" />
+      <Delete Files="$(PublishDir)libllama.so" />
+      <Delete Files="$(PublishDir)libllava_shared.so" />
+      <Delete Files="$(PublishDir)libggml.so" />
+      <Delete Files="$(PublishDir)libggml-base.so" />
+      <Delete Files="$(PublishDir)libggml-cpu.so" />
+      <Delete Files="$(PublishDir)libggml-vulkan.so" />
+      <Delete Files="$(PublishDir)libllama.dylib" />
+      <Delete Files="$(PublishDir)libllava_shared.dylib" />
+      <Delete Files="$(PublishDir)libggml.dylib" />
+      <Delete Files="$(PublishDir)libggml-base.dylib" />
+      <Delete Files="$(PublishDir)libggml-blas.dylib" />
+      <Delete Files="$(PublishDir)libggml-cpu.dylib" />
+      <Copy SourceFiles="@(LlamaSharpBackendCpu)" DestinationFolder="$(PublishDir)\runtimes\%(RecursiveDir)" />
+      <Copy SourceFiles="@(LlamaSharpBackendVulkanLinux)" DestinationFolder="$(PublishDir)\runtimes\%(RecursiveDir)" />
+      <Copy SourceFiles="@(LlamaSharpBackendVulkanWindows)" DestinationFolder="$(PublishDir)\runtimes\%(RecursiveDir)" />
+  </Target>
+
+  <Target Name="CopyRuntimesFolderOnPublish" AfterTargets="Publish" Condition="!$(RuntimeIdentifier.StartsWith('android'))">
+      <Delete Files="$(PublishDir)llama.dll" />
+      <Delete Files="$(PublishDir)llava_shared.dll" />
+      <Delete Files="$(PublishDir)ggml.dll" />
+      <Delete Files="$(PublishDir)ggml-base.dll" />
+      <Delete Files="$(PublishDir)ggml-cpu.dll" />
+      <Delete Files="$(PublishDir)ggml-vulkan.dll" />
+      <Delete Files="$(PublishDir)libllama.so" />
+      <Delete Files="$(PublishDir)libllava_shared.so" />
+      <Delete Files="$(PublishDir)libggml.so" />
+      <Delete Files="$(PublishDir)libggml-base.so" />
+      <Delete Files="$(PublishDir)libggml-cpu.so" />
+      <Delete Files="$(PublishDir)libggml-vulkan.so" />
+      <Delete Files="$(PublishDir)libllama.dylib" />
+      <Delete Files="$(PublishDir)libllava_shared.dylib" />
+      <Delete Files="$(PublishDir)libggml.dylib" />
+      <Delete Files="$(PublishDir)libggml-base.dylib" />
+      <Delete Files="$(PublishDir)libggml-blas.dylib" />
+      <Delete Files="$(PublishDir)libggml-cpu.dylib" />
+      <Copy SourceFiles="@(LlamaSharpBackendCpu)" DestinationFolder="$(PublishDir)\runtimes\%(RecursiveDir)" />
+      <Copy SourceFiles="@(LlamaSharpBackendVulkanLinux)" DestinationFolder="$(PublishDir)\runtimes\%(RecursiveDir)" />
+      <Copy SourceFiles="@(LlamaSharpBackendVulkanWindows)" DestinationFolder="$(PublishDir)\runtimes\%(RecursiveDir)" />
+  </Target>
+
+  <ItemGroup>
+    <ContentWithTargetPath Condition="$(RuntimeIdentifier.StartsWith('android-arm64'))" Include="@(LlamaSharpBackendCpuAndroidARM)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Condition="$(RuntimeIdentifier.StartsWith('android-x64'))" Include="@(LlamaSharpBackendCpuAndroidx64)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
     </ContentWithTargetPath>

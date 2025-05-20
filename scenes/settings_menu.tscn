@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://dab204horg5fk"]
 
-[ext_resource type="Script" path="res://scenes/Settings_Menu.cs" id="1_26pme"]
-[ext_resource type="Script" path="res://scenes/LnEditModel.cs" id="2_4lpsx"]
+[ext_resource type="Script" uid="uid://cnk6kdj2x4k0f" path="res://scenes/Settings_Menu.cs" id="1_26pme"]
+[ext_resource type="Script" uid="uid://crn07u2ub4tbn" path="res://scenes/LnEditModel.cs" id="2_4lpsx"]
 [ext_resource type="FontFile" uid="uid://dke22u4g2dwqe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="2_ibtjf"]
-[ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="3_d58y5"]
-[ext_resource type="Script" path="res://scenes/SBSeed.cs" id="5_as1l0"]
-[ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialIcon.gd" id="5_sifh5"]
-[ext_resource type="Script" path="res://scenes/ModelFileDialog.cs" id="7_ka70x"]
+[ext_resource type="Script" uid="uid://0ianj6nw44ny" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="3_d58y5"]
+[ext_resource type="Script" uid="uid://wyjuuyv8qdyf" path="res://scenes/SBSeed.cs" id="5_as1l0"]
+[ext_resource type="Script" uid="uid://cgpt2ljss0ayh" path="res://addons/material-design-icons/nodes/MaterialIcon.gd" id="5_sifh5"]
+[ext_resource type="Script" uid="uid://dsvaltnggp1x0" path="res://scenes/ModelFileDialog.cs" id="7_ka70x"]
 
 [sub_resource type="Animation" id="Animation_yfhg5"]
 resource_name = "slide_in"
@@ -40,8 +40,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vh4je"]
 _data = {
-"slide_in": SubResource("Animation_yfhg5"),
-"slide_out": SubResource("Animation_6f6c8")
+&"slide_in": SubResource("Animation_yfhg5"),
+&"slide_out": SubResource("Animation_6f6c8")
 }
 
 [node name="Settings_Menu" type="Control"]

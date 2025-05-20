@@ -55,9 +55,9 @@ public partial class LLM_manager : Node
 					ModelParams parameters = new(ProjectSettings.GlobalizePath(modelUserPath))
 					{
 						ContextSize = (uint)settings.Context_Size,
-						Seed = (uint)settings.Seed,
-						Threads = (uint)settings.Threads,
-						BatchThreads = (uint)settings.Batch_Threads
+						//Seed = (uint)settings.Seed,
+						Threads = (int)settings.Threads,
+						BatchThreads = (int)settings.Batch_Threads
 					};
 					if (OS.GetName().CompareTo("Windows") == 0 || OS.GetName().CompareTo("Linux") == 0) 
 					{
@@ -92,7 +92,7 @@ public partial class LLM_manager : Node
 		RichTextLabel llmMsgLabel = GetNode<RichTextLabel>("RichTextLabel");
 		llmMsgLabel.AppendText(prompt);
 
-		await foreach (var text in session.ChatAsync(new ChatHistory.Message(AuthorRole.User, prompt), new InferenceParams { Temperature = 0.6f, AntiPrompts = antiPrompts.ToList() }))
+		await foreach (var text in session.ChatAsync(new ChatHistory.Message(AuthorRole.User, prompt), new InferenceParams { AntiPrompts = antiPrompts.ToList() }))
 		{
 			llmMsgLabel.AppendText(text);
 		}

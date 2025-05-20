@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://d3wfn3gooohes"]
 
-[ext_resource type="Script" path="res://scenes/LLM_manager.cs" id="1_a7upi"]
+[ext_resource type="Script" uid="uid://dre2f5lw6px52" path="res://scenes/LLM_manager.cs" id="1_a7upi"]
 [ext_resource type="FontFile" uid="uid://dke22u4g2dwqe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="2_s3xno"]
-[ext_resource type="Script" path="res://scenes/LLMManager_LineEdit.cs" id="2_vtqkp"]
-[ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="3_7qgwh"]
+[ext_resource type="Script" uid="uid://bdueals1argk2" path="res://scenes/LLMManager_LineEdit.cs" id="2_vtqkp"]
+[ext_resource type="Script" uid="uid://0ianj6nw44ny" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="3_7qgwh"]
 
 [node name="LLM_Manager" type="Node"]
 script = ExtResource("1_a7upi")

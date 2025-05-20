@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dkr5smdig8tv4"]
 
-[ext_resource type="FontFile" uid="uid://bbfeoo2kuf30n" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="1_fqgpp"]
-[ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="2_l3c8x"]
-[ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialIcon.gd" id="3_87ldj"]
-[ext_resource type="Script" path="res://addons/material-design-icons/examples/LabelWithIcons.gd" id="4_lf58l"]
+[ext_resource type="FontFile" uid="uid://dke22u4g2dwqe" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="1_fqgpp"]
+[ext_resource type="Script" uid="uid://0ianj6nw44ny" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="2_l3c8x"]
+[ext_resource type="Script" uid="uid://cgpt2ljss0ayh" path="res://addons/material-design-icons/nodes/MaterialIcon.gd" id="3_87ldj"]
+[ext_resource type="Script" uid="uid://du8mxgd6yikuj" path="res://addons/material-design-icons/examples/LabelWithIcons.gd" id="4_lf58l"]
 
 [node name="Test" type="Control"]
 layout_mode = 3
